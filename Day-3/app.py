@@ -90,37 +90,85 @@
 
 # * Love Calculator
 
-print("Welcome to the Love Calculator!")
-name1 = input("What is your name? \n").upper()
-name2 = input("What is their name? \n").upper()
-count1 = 0
-count2 = 0
-count1 += name1.count('T')
-count1 += name1.count('R')
-count1 += name1.count('U')
-count1 += name1.count('E')
-count1 += name2.count('T')
-count1 += name2.count('R')
-count1 += name2.count('U')
-count1 += name2.count('E')
+# print("Welcome to the Love Calculator!")
+# name1 = input("What is your name? \n").upper()
+# name2 = input("What is their name? \n").upper()
+# count1 = 0
+# count2 = 0
+# count1 += name1.count('T')
+# count1 += name1.count('R')
+# count1 += name1.count('U')
+# count1 += name1.count('E')
+# count1 += name2.count('T')
+# count1 += name2.count('R')
+# count1 += name2.count('U')
+# count1 += name2.count('E')
 
-count2 += name2.count('L')
-count2 += name2.count('O')
-count2 += name2.count('V')
-count2 += name2.count('E')
-count2 += name1.count('L')
-count2 += name1.count('O')
-count2 += name1.count('V')
-count2 += name1.count('E')
+# count2 += name2.count('L')
+# count2 += name2.count('O')
+# count2 += name2.count('V')
+# count2 += name2.count('E')
+# count2 += name1.count('L')
+# count2 += name1.count('O')
+# count2 += name1.count('V')
+# count2 += name1.count('E')
 
-total_count = int(f'{count1}{count2}')
+# total_count = int(f'{count1}{count2}')
 
-if total_count < 10 or total_count > 90:
-    print(
-        f'Your score is {total_count}, you go together like coke and mentos.')
+# if total_count < 10 or total_count > 90:
+#     print(
+#         f'Your score is {total_count}, you go together like coke and mentos.')
 
-elif total_count >= 40 and total_count <= 50:
-    print(f'Your score is {total_count}, you are alright together.')
+# elif total_count >= 40 and total_count <= 50:
+#     print(f'Your score is {total_count}, you are alright together.')
 
-else:
-    print(f'Your score is {total_count}.')
+# else:
+#     print(f'Your score is {total_count}.')
+
+
+# * Treasure island
+
+print('''
+*******************************************************************************
+          |                   |                  |                     |
+ _________|________________.=""_;=.______________|_____________________|_______
+|                   |  ,-"_,=""     `"=.|                  |
+|___________________|__"=._o`"-._        `"=.______________|___________________
+          |                `"=._o`"=._      _`"=._                     |
+ _________|_____________________:=._o "=._."_.-="'"=.__________________|_______
+|                   |    __.--" , ; `"=._o." ,-"""-._ ".   |
+|___________________|_._"  ,. .` ` `` ,  `"-._"-._   ". '__|___________________
+          |           |o`"=._` , "` `; .". ,  "-._"-._; ;              |
+ _________|___________| ;`-.o`"=._; ." ` '`."\` . "-._ /_______________|_______
+|                   | |o;    `"-.o`"=._``  '` " ,__.--o;   |
+|___________________|_| ;     (#) `-.o `"=.`_.--"_o.-; ;___|___________________
+____/______/______/___|o;._    "      `".o|o_.--"    ;o;____/______/______/____
+/______/______/______/_"=._o--._        ; | ;        ; ;/______/______/______/_
+____/______/______/______/__"=._o--._   ;o|o;     _._;o;____/______/______/____
+/______/______/______/______/____"=._o._; | ;_.--"o.--"_/______/______/______/_
+____/______/______/______/______/_____"=.o|o_.--""___/______/______/______/____
+/______/______/______/______/______/______/______/______/______/______/_____ /
+*******************************************************************************
+''')
+print("Welcome to Treasure Island.")
+print("Your mission is to find the treasure.")
+
+first_direction = input(
+    'You\'re in cross road. Where you want to go? Type "left" or "right" : ')
+if first_direction == 'right':
+    print('Fall into a hole Game Over!')
+
+elif first_direction == 'left':
+    second_direction = input(
+        'you came to lake ,there is an island in middle of lake, Type "wait" to wait for boat or Type "swim" to swim across : ')
+    if second_direction == 'swim':
+        print('Oh no you\'ve been attacked by trout Game Over!')
+    elif second_direction == 'wait':
+        choosed_door = input(
+            'Welcome to magic island, you are in front of three doors "red", "blue", "yellow" : ')
+        if choosed_door == 'red':
+            print('Oh you\'ve been burned by fire Game Over')
+        elif choosed_door == 'blue':
+            print('Oh there is beast watchout, you\'ve been eaten Game Over!')
+        elif choosed_door == 'yellow':
+            print('You Win 🥳 !')
