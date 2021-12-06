@@ -53,4 +53,50 @@ for key in student_scores:
         student_grades[key] = "Fail"
 
 
-print(student_grades)
+# print(student_grades)
+
+# *  Nesting
+# travel_log = {
+
+#     "Italy": ["Florence", "Rome", "Pise", "Milan"],
+#     "Spain": {"visited_cities": ["Barcelona", "Madrid"]}
+# }
+
+
+# *  Nesting Dictionary List
+
+# travel_log = [
+
+#     {"country": "France", "visited_cities": [
+#         "Paris", "Lille", "Dijon"], "num_visit":3},
+
+#     {"country": "Italy", "visited_cities": [
+#         "Florence", "Rome", "Pise", "Milan"], "num_visit":5},
+
+#     {"country": "Spain", "visited_cities": [
+#         "Barcelona", "Madrid"], "num_visit":4}
+
+
+# ]
+
+travel_log = [
+    {
+        "country": "France",
+        "visits": 12,
+        "cities": ["Paris", "Lille", "Dijon"]
+    },
+    {
+        "country": "Germany",
+        "visits": 5,
+        "cities": ["Berlin", "Hamburg", "Stuttgart"]
+    },
+]
+
+
+def add_new_country(country_name, num_visits, list_cities):
+    travel_log.append(
+        {"country": country_name, "visits": num_visits, "cities": list_cities})
+
+
+add_new_country("Russia", 2, ["Moscow", "Saint Petersburg"])
+print(travel_log)
