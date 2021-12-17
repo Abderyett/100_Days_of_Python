@@ -1,3 +1,4 @@
+import os
 # Dictionaries
 
 programming_dictionaries = {
@@ -98,5 +99,48 @@ def add_new_country(country_name, num_visits, list_cities):
         {"country": country_name, "visits": num_visits, "cities": list_cities})
 
 
-add_new_country("Russia", 2, ["Moscow", "Saint Petersburg"])
-print(travel_log)
+# add_new_country("Russia", 2, ["Moscow", "Saint Petersburg"])
+# print(travel_log)
+
+
+# Auction Programm
+
+def clearConsole():
+    command = 'clear'
+    if os.name in ('nt', 'dos'):  # If Machine is running on Windows, use cls
+        command = 'cls'
+    os.system(command)
+
+
+isBider = True
+
+participants = []
+single_participant = {}
+
+
+def add_participant(participan_name, bid_amount):
+
+    participants.append({"name": participan_name, "bid": bid_amount})
+
+
+while isBider:
+
+    name = input("What's your name? : ")
+    bid = int(input("What's your bid? : $"))
+    add_participant(participan_name=name, bid_amount=bid)
+
+    response = input("Are there any other bidders? Type 'yes or 'no' ").lower()
+    clearConsole()
+    if response == "no":
+        isBider = False
+
+
+amounts_of_bids = []
+big_bid = ''
+
+for bider in participants:
+    amounts_of_bids.append(bider["bid"])
+    if len(amounts_of_bids) == len(participants):
+        big_bid = max(amounts_of_bids)
+    if bider['bid'] == big_bid:
+        print(f"The winner is {bider['name']} with a bid of ${big_bid}")
