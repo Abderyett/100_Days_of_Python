@@ -8,6 +8,7 @@ def fromat_name(f_name, l_name):
 
 # Days In Month
 
+
 def is_leap(year):
     if year % 4 == 0:
         if year % 100 == 0:
@@ -31,7 +32,57 @@ def days_in_month(year, month):
         return month_days[month]
 
 
-year = int(input("Enter a year: "))
-month = int(input("Enter a month: "))
-days = days_in_month(year, month)
-print(days)
+# year = int(input("Enter a year: "))
+# month = int(input("Enter a month: "))
+# days = days_in_month(year, month)
+# print(days)
+
+# Docstrings a way to write about the functionality of function
+
+
+def fromat_name(f_name, l_name):
+    """Take afirst name and last name and return title version fo name"""
+    full_name = f"{f_name} {l_name}"
+    return full_name.title()
+
+
+# print(fromat_name("jesse", "james"))
+
+
+# * Calculator
+
+
+def add(n1, n2):
+    return n1 + n2
+
+
+def substract(n1, n2):
+    return n1 - n2
+
+
+def multiply(n1, n2):
+    return n1 * n2
+
+
+def devide(n1, n2):
+    return n1 / n2
+
+
+operations = {
+    "+": add,
+    "-": substract,
+    "*": multiply,
+    "/": devide,
+}
+
+num1 = int(input("What's the first number ? :"))
+
+for operation in operations:
+    print(operation)
+
+operation_symbol = input("Pick operation from line above :")
+function = operations[operation_symbol]
+
+num2 = int(input("What's the second number ? :"))
+answer = function(num1, num2)
+print(f"{num1} {operation_symbol} {num2} = {answer}")
