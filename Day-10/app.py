@@ -1,3 +1,6 @@
+from art import logo
+
+
 def fromat_name(f_name, l_name):
     full_name = f"{f_name} {l_name}"
     return full_name.title()
@@ -75,14 +78,34 @@ operations = {
     "/": devide,
 }
 
-num1 = int(input("What's the first number ? :"))
 
-for operation in operations:
-    print(operation)
+def calculator():
+    print(logo)
 
-operation_symbol = input("Pick operation from line above :")
-function = operations[operation_symbol]
+    num1 = float(input("What's the first number ? :"))
 
-num2 = int(input("What's the second number ? :"))
-answer = function(num1, num2)
-print(f"{num1} {operation_symbol} {num2} = {answer}")
+    for operation in operations:
+        print(operation)
+
+    is_continue = True
+
+    while is_continue:
+        operation_symbol = input("Pick operation :")
+        function = operations[operation_symbol]
+
+        num2 = float(input("What's the next number ? :"))
+        answer = function(num1, num2)
+        print(f"{num1} {operation_symbol} {num2} = {answer}")
+        continue_answer = input(
+            f"Type 'y' to continue calculating with {answer}, or Type 'n' to exit. :  "
+        ).lower()
+
+        if continue_answer == "y":
+            num1 = answer
+
+        else:
+            is_continue = False
+            calculator()
+
+
+calculator()
