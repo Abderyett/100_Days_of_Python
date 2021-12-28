@@ -21,37 +21,82 @@ import random
 ## * The computer is the dealer.
 
 
-response = input("Do you want to play a game of Blackjack? Type 'y' or 'n' : ")
+response = input("Do you want to play a game of Blackjack? Type 'y' or 'n' : ").lower()
 cards = [11, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10]
 user = []
 computer = []
 
 
-def first_pick():
-    user_first = random.choice(cards)
-    user.append(user_first)
-    user_second = random.choice(cards)
-    user.append(user_second)
-    computer_first = random.choice(cards)
-    computer.append(computer_first)
-    computer_second = random.choice(cards)
-    computer.append(computer_second)
+def single_pick(list):
+    pick = random.choice(cards)
+    list.append(pick)
+
+
+def user_pick():
+    single_pick(user)
+    single_pick(user)
+
+
+def computer_pick():
+    single_pick(computer)
+    single_pick(computer)
+    total = 0
+    should_continue = True
+    while should_continue:
+        for i in computer:
+            total += i
+        if total < 18:
+            single_pick(computer)
+        elif total > 20:
+            should_continue = False
 
 
 if response == "y":
 
     def blackjack():
         print(logo)
-        first_pick()
+        user_pick()
+        computer_pick()
         user_total = 0
         for i in user:
             user_total += i
         computer_total = 0
         for i in computer:
             computer_total += i
-
         print(f"Your cards: {user}, current score: {user_total}")
-        print(f"Your cards: {computer}, current score: {computer_total}")
+        print(f"Computer's first card: {computer[0]}")
+        is_continue = True
+        while is_continue:
+            another_pick = input(
+                "Type 'y' to get another card, type 'n' to pass: "
+            ).lower()
+            if another_pick == "y":
+                single_pick(user)
+                for i in user:
+                    user_total += i
+
+                if user_total > 21:
+                    is_continue = False
+
+            print(f"Your cards: {user}, current score: {user_total}")
+            print(f" Computer's final hand: {computer}, final score: {computer_total} ")
+            if user_total == 21:
+                print("You win 🥳")
+            elif computer_total == 21:
+                print("You loose 🥶")
+            elif computer_total > 21:
+                print("You win 🥳")
+                is_continue = False
+            elif user_total > 21:
+                is_continue = False
+                print("You loose 🥶")
+            elif computer_total > user_total:
+                print("You loose 🥶")
+            elif computer_total == user_total:
+                print("You Draw 🙂")
+                is_continue = False
+            else:
+                print("You win 🥳")
 
     blackjack()
 
