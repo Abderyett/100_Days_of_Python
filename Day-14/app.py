@@ -9,7 +9,7 @@ print(logo)
 random_num = random.randint(0, len(data) - 1)
 
 
-def clearConsole():
+def clear():
     command = "clear"
     if os.name in ("nt", "dos"):  # If Machine is running on Windows, use cls
         command = "cls"
@@ -17,6 +17,7 @@ def clearConsole():
 
 
 def pick_num():
+
     random_num = random.randint(0, len(data) - 1)
 
     return random_num
@@ -24,6 +25,7 @@ def pick_num():
 
 is_continue = True
 score = 0
+
 while is_continue:
     first_pick = data[pick_num()]
     second_pick = data[pick_num()]
