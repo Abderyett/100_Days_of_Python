@@ -24,14 +24,19 @@ MENU = {
     },
 }
 
-resources = {
-    "water": 300,
-    "milk": 200,
-    "coffee": 100,
-}
+# resources = {
+#     "water": 300,
+#     "milk": 200,
+#     "coffee": 100,
+# }
 
 while True:
     drink = input("What would you like? (espresso/latte/cappuccino): ")
+    resources = {
+        "water": 300,
+        "milk": 200,
+        "coffee": 100,
+    }
     if drink == "report":
         print(
             f"Water {resources['water']}ml\nMilk {resources['milk']}ml\nCoffee {resources['coffee']}g"
@@ -45,5 +50,28 @@ while True:
         pennies = int(input("how many pennies? : "))
         total = 0.25 * quarter + 0.1 * dimes + 0.05 * nickles + 0.01 * pennies
         change = total - MENU[drink]["cost"]
-        print(f"Here is {change}$ in change")
-        print(f"Here is your {drink} ☕️, Enjoy! ")
+        if total > MENU[drink]["cost"]:
+            if drink == "espresso":
+                print(MENU[drink]["ingredients"]["water"], "WATER")
+                MENU[drink]["ingredients"]["water"] = (
+                    resources["water"] - MENU[drink]["ingredients"]["water"]
+                )
+                MENU[drink]["ingredients"]["coffee"] = (
+                    resources["coffee"] - MENU[drink]["ingredients"]["coffee"]
+                )
+
+            elif drink == "latte" or drink == "cappuccino":
+                MENU[drink]["ingredients"]["water"] = (
+                    resources["water"] - MENU[drink]["ingredients"]["water"]
+                )
+                MENU[drink]["ingredients"]["coffee"] = (
+                    resources["coffee"] - MENU[drink]["ingredients"]["coffee"]
+                )
+                MENU[drink]["ingredients"]["milk"] = (
+                    resources["milk"] - MENU[drink]["ingredients"]["milk"]
+                )
+
+            # print(f"Here is {change}$ in change")
+            # print(f"Here is your {drink} ☕️, Enjoy! ")
+        else:
+            print("Sorry that's not enough money. Money refunded.")
