@@ -24,19 +24,15 @@ MENU = {
     },
 }
 
-# resources = {
-#     "water": 300,
-#     "milk": 200,
-#     "coffee": 100,
-# }
+resources = {
+    "water": 300,
+    "milk": 200,
+    "coffee": 100,
+}
 
 while True:
     drink = input("What would you like? (espresso/latte/cappuccino): ")
-    resources = {
-        "water": 300,
-        "milk": 200,
-        "coffee": 100,
-    }
+
     if drink == "report":
         print(
             f"Water {resources['water']}ml\nMilk {resources['milk']}ml\nCoffee {resources['coffee']}g"
@@ -52,26 +48,52 @@ while True:
         change = total - MENU[drink]["cost"]
         if total > MENU[drink]["cost"]:
             if drink == "espresso":
-                print(MENU[drink]["ingredients"]["water"], "WATER")
-                MENU[drink]["ingredients"]["water"] = (
-                    resources["water"] - MENU[drink]["ingredients"]["water"]
-                )
-                MENU[drink]["ingredients"]["coffee"] = (
-                    resources["coffee"] - MENU[drink]["ingredients"]["coffee"]
-                )
+                if (
+                    resources["water"] > MENU[drink]["ingredients"]["water"]
+                    and resources["coffee"] > MENU[drink]["ingredients"]["coffee"]
+                ):
+
+                    resources.update(
+                        {
+                            "water": resources["water"]
+                            - MENU[drink]["ingredients"]["water"]
+                        }
+                    )
+                    resources.update(
+                        {
+                            "coffee": resources["coffee"]
+                            - MENU[drink]["ingredients"]["coffee"]
+                        }
+                    )
+                else:
+                    print(f"There is not enough ingredients to make {drink}")
 
             elif drink == "latte" or drink == "cappuccino":
-                MENU[drink]["ingredients"]["water"] = (
-                    resources["water"] - MENU[drink]["ingredients"]["water"]
-                )
-                MENU[drink]["ingredients"]["coffee"] = (
-                    resources["coffee"] - MENU[drink]["ingredients"]["coffee"]
-                )
-                MENU[drink]["ingredients"]["milk"] = (
-                    resources["milk"] - MENU[drink]["ingredients"]["milk"]
-                )
+                if (
+                    resources["water"] > MENU[drink]["ingredients"]["water"]
+                    and resources["coffee"] > MENU[drink]["ingredients"]["coffee"]
+                    and resources["milk"] > MENU[drink]["ingredients"]["milk"]
+                ):
 
-            # print(f"Here is {change}$ in change")
-            # print(f"Here is your {drink} ☕️, Enjoy! ")
+                    resources.update(
+                        {
+                            "water": resources["water"]
+                            - MENU[drink]["ingredients"]["water"]
+                        }
+                    )
+                    resources.update(
+                        {
+                            "coffee": resources["coffee"]
+                            - MENU[drink]["ingredients"]["coffee"]
+                        }
+                    )
+                    resources.update(
+                        {"milk": resources["milk"] - MENU[drink]["ingredients"]["milk"]}
+                    )
+            else:
+                print(f"There is not enough ingredients to make {drink}")
+
+            print(f"Here is {change}$ in change")
+            print(f"Here is your {drink} ☕️, Enjoy! ")
         else:
             print("Sorry that's not enough money. Money refunded.")
