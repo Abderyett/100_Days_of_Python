@@ -30,29 +30,39 @@ resources = {
     "coffee": 100,
 }
 
+resources["money"] = 0.0
+
+
+def check_suficiant_resources(ingredients, drink):
+    for item in ingredients:
+        if ingredients[item] >= resources[item]:
+            print(f"There is not enough {item} to make {drink}")
+            return False
+
+    return True
+
+
 while True:
+
     drink = input("What would you like? (espresso/latte/cappuccino): ")
 
     if drink == "report":
         print(
-            f"Water {resources['water']}ml\nMilk {resources['milk']}ml\nCoffee {resources['coffee']}g"
+            f"Water {resources['water']}ml\nMilk {resources['milk']}ml\nCoffee {resources['coffee']}g\nMoney {resources['money']}$"
         )
+
     elif drink == "espresso" or drink == "latte" or drink == "cappuccino":
-        print("Please insert coins.")
+        if check_suficiant_resources(MENU[drink]["ingredients"], drink):
+            print("Please insert coins.")
 
-        quarter = int(input("how many quarters? : "))
-        dimes = int(input("how many dimes? : "))
-        nickles = int(input("how many nickles? : "))
-        pennies = int(input("how many pennies? : "))
-        total = 0.25 * quarter + 0.1 * dimes + 0.05 * nickles + 0.01 * pennies
-        change = total - MENU[drink]["cost"]
-        if total > MENU[drink]["cost"]:
-            if drink == "espresso":
-                if (
-                    resources["water"] > MENU[drink]["ingredients"]["water"]
-                    and resources["coffee"] > MENU[drink]["ingredients"]["coffee"]
-                ):
-
+            quarter = int(input("how many quarters? : "))
+            dimes = int(input("how many dimes? : "))
+            nickles = int(input("how many nickles? : "))
+            pennies = int(input("how many pennies? : "))
+            total = 0.25 * quarter + 0.1 * dimes + 0.05 * nickles + 0.01 * pennies
+            change = total - MENU[drink]["cost"]
+            if total > MENU[drink]["cost"]:
+                if drink == "espresso":
                     resources.update(
                         {
                             "water": resources["water"]
@@ -65,15 +75,12 @@ while True:
                             - MENU[drink]["ingredients"]["coffee"]
                         }
                     )
-                else:
-                    print(f"There is not enough ingredients to make {drink}")
+                    print(MENU[drink]["cost"])
+                    resources.update(
+                        {"money": resources["money"] + MENU[drink]["cost"]}
+                    )
 
-            elif drink == "latte" or drink == "cappuccino":
-                if (
-                    resources["water"] > MENU[drink]["ingredients"]["water"]
-                    and resources["coffee"] > MENU[drink]["ingredients"]["coffee"]
-                    and resources["milk"] > MENU[drink]["ingredients"]["milk"]
-                ):
+                elif drink == "latte" or drink == "cappuccino":
 
                     resources.update(
                         {
@@ -90,10 +97,13 @@ while True:
                     resources.update(
                         {"milk": resources["milk"] - MENU[drink]["ingredients"]["milk"]}
                     )
-            else:
-                print(f"There is not enough ingredients to make {drink}")
+                    resources.update(
+                        {"money": resources["money"] + MENU[drink]["cost"]}
+                    )
+                else:
+                    print(f"Please select correct drink")
 
-            print(f"Here is {change}$ in change")
-            print(f"Here is your {drink} ☕️, Enjoy! ")
-        else:
-            print("Sorry that's not enough money. Money refunded.")
+                print(f"Here is {round(change,2)}$ in change")
+                print(f"Here is your {drink} ☕️, Enjoy! ")
+            else:
+                print("Sorry that's not enough money. Money refunded.")
