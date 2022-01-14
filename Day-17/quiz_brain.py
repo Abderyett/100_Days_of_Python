@@ -2,6 +2,7 @@
 class QuizBrain():
     def __init__(self, q_list):
         self.question_number = 0
+        self.score = 0
         self.question_list = q_list
 
     def next_question(self):
@@ -9,15 +10,19 @@ class QuizBrain():
         self.question_number += 1
         answer = input(
             f"Q.{self.question_number}: {current_question.text}  (True/False) : ").capitalize()
+        self.check_answer(answer, current_question.answer)
 
     def still_have_questions(self):
-        if self.question_number-1 == len(self.question_list):
-            return False
-        else:
-            return True
+        return self.question_number < len(self.question_list)
 
-            # if answer == current_question["answer"]:
-            #       print('You got it Right!')
-            #       print(f"Your current score is: 1/{self.question_number}")
-            #   else:
-            #       print('That was wrong!')
+    def check_answer(self, answer, correct_answer):
+
+        if answer == correct_answer:
+            self.score += 1
+            print('You got it Right!')
+
+        else:
+            print('That was wrong!')
+        print(
+            f"Your current score is: {self.score}/{self.question_number}")
+        print("\n")
