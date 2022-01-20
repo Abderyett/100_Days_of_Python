@@ -22,9 +22,12 @@ tim.color('DarkGreen')
 colors = ["blue", "DarkOrange", "green", "DeepSkyBlue",
           "gold1", "orchid", "turquoise1", "purple2"]
 
+# *  Challange 2
+tim.pensize(10)
+
 
 def shapes_draw():
-    for i in range(3, 10):
+    for i in range(3, 11):
         chosed_color = random.choice(colors)
         tim.color(chosed_color)
         for _ in range(i):
@@ -33,7 +36,25 @@ def shapes_draw():
             tim.right(360/i)
 
 
-shapes_draw()
+# shapes_draw()
+
+
+# * Challange 3:
+def random_moves(steps):
+
+    angles = [0, 90, 180, 270]
+
+    for _ in range(steps):
+
+        angle = random.choice(angles)
+        chosed_color = random.choice(colors)
+        tim.color(chosed_color)
+        tim.forward(30)
+        tim.setheading(angle)
+
+
+random_moves(50)
+
 # def triangle():
 #     for _ in range(3):
 #         tim.forward(100)
@@ -105,6 +126,7 @@ shapes_draw()
 
 
 # decagon()
+
 
 screen = Screen()
 screen.exitonclick()
