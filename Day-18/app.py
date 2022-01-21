@@ -1,8 +1,10 @@
 import random
-import imp
-from turtle import Turtle, Screen
 
-tim = Turtle()
+import turtle as t
+
+tim = t.Turtle()
+
+t.colormode(255)
 tim.shape("turtle")
 tim.color('DarkGreen')
 
@@ -19,16 +21,21 @@ tim.color('DarkGreen')
 #     tim.pendown()
 
 
-colors = ["blue", "DarkOrange", "green", "DeepSkyBlue",
-          "gold1", "orchid", "turquoise1", "purple2"]
+def random_color():
+    r = random.randint(0, 255)
+    g = random.randint(0, 255)
+    b = random.randint(0, 255)
+    random_color = (r, g, b)
+    return random_color
+
 
 # *  Challange 2
-tim.pensize(10)
+# tim.pensize(10)
 
 
 def shapes_draw():
     for i in range(3, 11):
-        chosed_color = random.choice(colors)
+        chosed_color = random_color()
         tim.color(chosed_color)
         for _ in range(i):
 
@@ -47,86 +54,27 @@ def random_moves(steps):
     for _ in range(steps):
 
         angle = random.choice(angles)
-        chosed_color = random.choice(colors)
+        chosed_color = random_color()
         tim.color(chosed_color)
         tim.forward(30)
         tim.setheading(angle)
 
 
-random_moves(50)
+# random_moves(50)
 
-# def triangle():
-#     for _ in range(3):
-#         tim.forward(100)
-#         tim.right(120)
+# *  Challange 4
+tim.speed(0)
 
 
-# triangle()
+def draw_spirograph(size_of_gap):
+    for _ in range(int(360 / size_of_gap)):
+        tim.color(random_color())
+        tim.circle(100)
+        tim.setheading(tim.heading() + size_of_gap)
 
 
-# def square():
-#     for _ in range(4):
-#         tim.forward(100)
-#         tim.right(90)
+draw_spirograph(5)
 
 
-# square()
-
-
-# def pentagon():
-
-#     for _ in range(5):
-#         tim.forward(100)
-#         tim.right(72)
-
-
-# pentagon()
-
-
-# def hexagon():
-#     for _ in range(6):
-#         tim.forward(100)
-#         tim.right(60)
-
-
-# hexagon()
-
-
-# def heptagon():
-#     for _ in range(7):
-#         tim.forward(100)
-#         tim.right(360/7)
-
-
-# heptagon()
-
-
-# def optagon():
-#     for _ in range(8):
-#         tim.forward(100)
-#         tim.right(360/8)
-
-
-# optagon()
-
-
-# def nonagon():
-#     for _ in range(9):
-#         tim.forward(100)
-#         tim.right(360/9)
-
-
-# nonagon()
-
-
-# def decagon():
-#     for _ in range(10):
-#         tim.forward(100)
-#         tim.right(360/10)
-
-
-# decagon()
-
-
-screen = Screen()
+screen = t.Screen()
 screen.exitonclick()
