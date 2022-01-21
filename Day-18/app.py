@@ -1,3 +1,4 @@
+import colorgram
 import random
 
 import turtle as t
@@ -5,8 +6,8 @@ import turtle as t
 tim = t.Turtle()
 
 t.colormode(255)
-tim.shape("turtle")
-tim.color('DarkGreen')
+# tim.shape("turtle")
+# tim.color('DarkGreen')
 
 # Draw Square
 
@@ -63,7 +64,7 @@ def random_moves(steps):
 # random_moves(50)
 
 # *  Challange 4
-tim.speed(0)
+tim.speed(10)
 
 
 def draw_spirograph(size_of_gap):
@@ -73,8 +74,40 @@ def draw_spirograph(size_of_gap):
         tim.setheading(tim.heading() + size_of_gap)
 
 
-draw_spirograph(5)
+# draw_spirograph(5)
 
+
+# * Final Challange Hirst spot paintings
 
 screen = t.Screen()
+colors = colorgram.extract('hirst spot painting.jpeg', 20)
+
+colors_list = []
+for color in colors:
+    r = color.rgb.r
+    g = color.rgb.g
+    b = color.rgb.b
+    colors_list.append((r, g, b))
+tim.penup()
+
+
+tim.setpos(-400, -300)
+
+
+def doted_line():
+    for _ in range(20):
+        choosed_color = random.choice(colors_list)
+        tim.dot(20, choosed_color)
+        tim.fd(40)
+
+
+x = screen.screensize()[0]
+y = screen.screensize()[1]
+
+for _ in range(int(y/20)):
+    tim.setpos(-x, -y)
+    doted_line()
+    y -= 30
+
+
 screen.exitonclick()
