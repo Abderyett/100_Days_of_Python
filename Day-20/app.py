@@ -25,9 +25,12 @@ is_continnue_moving = True
 
 while is_continnue_moving:
     screen.update()
-    time.sleep(0.1)
-    for seg in segments:
-        seg.fd(10)
-
+    time.sleep(1)
+    # to imitate real snake move and be able to turn the head of snake and followed by body
+    for seg_num in range(len(segments)-1, 0, -1):
+        new_x = segments[seg_num - 1].xcor()
+        new_y = segments[seg_num - 1].ycor()
+        segments[seg_num].goto(new_x, new_y)
+    segments[0].fd(20)
 
 screen.exitonclick()
