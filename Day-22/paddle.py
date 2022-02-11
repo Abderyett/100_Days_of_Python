@@ -11,15 +11,17 @@ class Paddle(Turtle):
 
         self.speed("fastest")
         self.setpos(pos, 0)
-        # self.setheading(90)
 
     def move_up(self):
         y_pos = self.ycor()
-        if y_pos <= 260:
-            self.goto(self.xcor(), y_pos+20)
+        new_y = self.ycor() + 20
+        if y_pos < 260:
+
+            self.goto(self.xcor(), new_y)
 
     def move_down(self):
 
         y_pos = self.ycor()
+        new_y = self.ycor() - 20
         if y_pos > -260:
-            self.goto(self.xcor(), y_pos-20)
+            self.goto(self.xcor(), new_y)
