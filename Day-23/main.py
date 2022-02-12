@@ -6,6 +6,7 @@ from scoreboard import Scoreboard
 
 screen = Screen()
 player = Player()
+scoreboard = Scoreboard()
 carmanager = CarManager()
 screen.setup(width=600, height=600)
 screen.tracer(0)
@@ -25,11 +26,14 @@ while game_is_on:
     for car in carmanager.all_cars:
         if car.distance(player) < 20:
             game_is_on = False
+            scoreboard.game_over()
     # Detect successfull crossing
     if player.ycor() > 280:
 
         player.refresh()
         carmanager.level_up()
+
+        scoreboard.increase_level()
 
 
 screen.exitonclick()
