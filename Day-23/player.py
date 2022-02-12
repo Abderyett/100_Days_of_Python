@@ -16,3 +16,7 @@ class Player(Turtle):
         x_pos = self.xcor()
         y_pos = self.ycor()
         self.goto(x_pos, y_pos+MOVE_DISTANCE)
+
+    def refresh(self):
+        self.goto(STARTING_POSITION)
+        self.setheading(90)
