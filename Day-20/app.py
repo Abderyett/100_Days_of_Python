@@ -34,12 +34,14 @@ while is_continnue_moving:
     if snake.head.xcor() > 280 or snake.head.xcor() < -280 or snake.head.ycor() > 280 or snake.head.ycor() < -280:
 
         scoreboard.reset()
+        scoreboard.update_scoreboard()
 
     # Detect Collision  with tail
     for segment in snake.segments[1:]:
 
         if snake.head.distance(segment) < 10:
             scoreboard.reset()
+            scoreboard.update_scoreboard()
             snake.reset()
 
 screen.exitonclick()
