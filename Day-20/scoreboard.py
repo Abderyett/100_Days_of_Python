@@ -8,7 +8,7 @@ class Scoreboard(Turtle):
 
         super().__init__()
         self.score = 0
-        with open("my_file.txt") as data:
+        with open("/Users/macbooktouch/Desktop/100 Days of python/Day-20/my_file.txt") as data:
             self.hight_score = int(data.read())
         self.color("white")
         self.penup()
@@ -30,7 +30,7 @@ class Scoreboard(Turtle):
     def reset(self):
         if self.score > self.hight_score:
             self.hight_score = self.score
-            with open("my_file.txt", mode="w") as file:
+            with open("/Users/macbooktouch/Desktop/100 Days of python/Day-20/my_file.txt", mode="w") as file:
                 file.write(f"{self.hight_score}")
 
         self.score = 0
