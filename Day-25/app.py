@@ -55,7 +55,7 @@ import pandas
 # new_data.to_csv("new_data.csv")
 
 data = pandas.read_csv(
-    "/Users/macbooktouch/Desktop/100 Days of python/Day-25/227 2018-Central-Park-Squirrel-Census-Squirrel-Data.csv")
+    "./227 2018-Central-Park-Squirrel-Census-Squirrel-Data.csv")
 
 
 item_count = data["Primary Fur Color"].value_counts()
