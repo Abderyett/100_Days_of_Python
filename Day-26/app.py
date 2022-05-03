@@ -1,4 +1,4 @@
-
+import random
 numbers = [1, 2, 3, 4, 5]
 
 new_list = [n*2 for n in numbers]
@@ -35,4 +35,43 @@ list_1 = list('./file1.txt')
 list_2 = list('./file2.txt')
 
 common_num = [l1 for l1 in list_1 if l1 in list_2]
-print(common_num)
+# print(common_num)
+
+
+# Dictionary comprehension
+
+names = ["Alex", "Jesse", "Bob", "Eleonor", "Monica", "Michele"]
+
+students_score = {student: random.randint(0, 100) for student in names}
+
+# {new_key:new_value for (key, value) in dictionary.items()}
+students_passed = {
+    student: score for (student, score) in students_score.items() if score > 60}
+
+
+# print(students_passed)
+
+# Excercise Dictionary comprehension
+
+sentences = "What is the Airspeed Velocity of an Unladen Swallow?"
+
+sentence_list = sentences.split()
+
+dic_word_counter = {sentence: len(sentence)
+                    for sentence in sentence_list}
+
+# print(dic_word_counter)
+
+weather_c = {
+    "Monday": 12,
+    "Tuesday": 14,
+    "Wednesday": 15,
+    "Thursday": 14,
+    "Friday": 21,
+    "Saturday": 22,
+    "Sunday": 24,
+}
+
+weather_f = {day: round(tem_c*9/5, 2)+32 for(day, tem_c) in weather_c.items()}
+
+print(weather_f)
