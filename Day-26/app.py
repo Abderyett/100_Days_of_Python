@@ -1,4 +1,5 @@
 import random
+import pandas as pd
 numbers = [1, 2, 3, 4, 5]
 
 new_list = [n*2 for n in numbers]
@@ -74,4 +75,13 @@ weather_c = {
 
 weather_f = {day: round(tem_c*9/5, 2)+32 for(day, tem_c) in weather_c.items()}
 
-print(weather_f)
+# print(weather_f)
+df = pd.read_csv('./nato_phonetic_alphabet.csv')
+
+# in order to display data like {"A":"Alpha","B":"Bravo",...}
+phonetic_dic = {row.letter: row.code for(index, row) in df.iterrows()}
+
+word = input("Please enter Word : ").upper()
+
+splited__word = [phonetic_dic[letter] for letter in word]
+print(splited__word)
