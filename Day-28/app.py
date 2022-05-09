@@ -6,7 +6,7 @@ RED = "#e7305b"
 GREEN = "#9bdeac"
 YELLOW = "#f7f5dd"
 FONT_NAME = "Courier"
-WORK_MIN = 25
+WORK_MIN = 1
 SHORT_BREAK_MIN = 5
 LONG_BREAK_MIN = 20
 
@@ -23,6 +23,8 @@ def start_counter():
 def count_down(count):
     count_min = math.floor(count/60)
     count_sec = count % 60
+    if count_sec == 0 or count_sec < 10:
+        count_sec = f"0{count_sec}"
     canvas.itemconfig(text_timer, text=f"{count_min}:{count_sec}")
     if count > 0:
         window.after(1000, count_down, count - 1)
