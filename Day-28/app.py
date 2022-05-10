@@ -8,9 +8,9 @@ RED = "#e7305b"
 GREEN = "#9bdeac"
 YELLOW = "#f7f5dd"
 FONT_NAME = "Courier"
-WORK_MIN = 25
+WORK_MIN = 1
 SHORT_BREAK_MIN = 5
-LONG_BREAK_MIN = 20
+LONG_BREAK_MIN = 2
 reps = 0
 
 # ---------------------------- TIMER RESET ------------------------------- #
@@ -25,15 +25,15 @@ def start_counter():
     short_break = SHORT_BREAK_MIN*60
     long_break = LONG_BREAK_MIN*60
 
-    if reps % 2 == 1:
-        count_down(work_break)
-        label.config(text="Work", fg=GREEN)
+    if reps % 8 == 0:
+        count_down(long_break)
+        label.config(text="Break", fg=RED)
     elif reps % 2 == 0:
         count_down(short_break)
         label.config(text="Break", fg=PINK)
     else:
-        count_down(long_break)
-        label.config(text="Break", fg=RED)
+        count_down(work_break)
+        label.config(text="Work", fg=GREEN)
 # ---------------------------- COUNTDOWN MECHANISM ------------------------------- #
 
 
@@ -44,9 +44,14 @@ def count_down(count):
         count_sec = f"0{count_sec}"
     canvas.itemconfig(text_timer, text=f"{count_min}:{count_sec}")
     if count > 0:
-        window.after(1000, count_down, count - 1)
+        window.after(1000, count_down, count - 40)
     else:
         start_counter()
+        mark = ""
+        work_session = math.floor(reps/2)
+        for _ in range(work_session):
+            mark += "✓"
+        label_check.config(text=mark)
 
 
 # ---------------------------- UI SETUP ------------------------------- #
@@ -70,8 +75,9 @@ label = Label(text="Timer", font=(
     FONT_NAME, 60, "bold"), fg=GREEN, bg=YELLOW)
 label.grid(column=2, row=1)
 
-label_check = Label(text="✓", font=(FONT_NAME, 40, "bold"),
-                    fg=GREEN, bg=YELLOW).grid(column=2, row=8)
+label_check = Label(font=(FONT_NAME, 40, "bold"),
+                    fg=GREEN, bg=YELLOW)
+label_check.grid(column=2, row=8)
 # Buttons
 
 start_btn = Button(text="Start", fg="white",
