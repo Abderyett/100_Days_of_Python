@@ -8,13 +8,22 @@ RED = "#e7305b"
 GREEN = "#9bdeac"
 YELLOW = "#f7f5dd"
 FONT_NAME = "Courier"
-WORK_MIN = 1
+WORK_MIN = 25
 SHORT_BREAK_MIN = 5
-LONG_BREAK_MIN = 2
+LONG_BREAK_MIN = 20
 reps = 0
+timer = None
 
 # ---------------------------- TIMER RESET ------------------------------- #
 
+
+def timer_reset():
+    global reps
+    window.after_cancel(timer)
+    canvas.itemconfig(text_timer, text="00:00")
+    label.config(text="Timer", fg=GREEN)
+    label_check.config(text="")
+    reps = 0
 # ---------------------------- TIMER MECHANISM ------------------------------- #
 
 
@@ -44,7 +53,8 @@ def count_down(count):
         count_sec = f"0{count_sec}"
     canvas.itemconfig(text_timer, text=f"{count_min}:{count_sec}")
     if count > 0:
-        window.after(1000, count_down, count - 40)
+        global timer
+        timer = window.after(1000, count_down, count - 1)
     else:
         start_counter()
         mark = ""
@@ -83,7 +93,7 @@ label_check.grid(column=2, row=8)
 start_btn = Button(text="Start", fg="white",
                    highlightbackground=GREEN, cursor="hand", highlightthickness=0, command=start_counter).grid(column=1, row=8)
 reset_btn = Button(text="reset", fg="white",
-                   highlightbackground=RED, cursor="hand", highlightthickness=0).grid(column=9, row=8)
+                   highlightbackground=RED, cursor="hand", highlightthickness=0, command=timer_reset).grid(column=9, row=8)
 canvas.grid()
 
 window.mainloop()
