@@ -1,4 +1,6 @@
+from dataclasses import field
 from tkinter import *
+from tkinter import messagebox
 
 # ---------------------------- PASSWORD GENERATOR ------------------------------- #
 
@@ -6,12 +8,24 @@ from tkinter import *
 
 
 def submit():
-    with open("passwords.txt", mode="a") as file:
-        file.write(
-            f"{website_input.get()} | {username_input.get()} | {password_input.get()}\n")
+    website = website_input.get()
+    email = username_input.get()
+    password = password_input.get()
 
-        website_input.delete(0, END)
-        password_input.delete(0, END)
+    if len(website) == 0 or len(email) == 0 or len(password) == 0:
+        messagebox.showwarning(
+            title="Empty field", message="Please fill the empty field")
+    else:
+
+        is_ok = messagebox.askokcancel(
+            title=website, message=f"These are details entred :\nUsername: {email}\nPassword:{password}\n Do you want to save?")
+        if is_ok:
+            with open("passwords.txt", mode="a") as file:
+                file.write(
+                    f"{website} | {email} | {password}\n")
+
+                website_input.delete(0, END)
+                password_input.delete(0, END)
 
 
 # ---------------------------- UI SETUP ------------------------------- #
