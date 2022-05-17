@@ -81,6 +81,7 @@ df = pd.read_csv('./nato_phonetic_alphabet.csv')
 # in order to display data like {"A":"Alpha","B":"Bravo",...}
 phonetic_dic = {row.letter: row.code for(index, row) in df.iterrows()}
 
+
 word = input("Please enter Word : ").upper()
 
 splited__word = [phonetic_dic[letter] for letter in word]
