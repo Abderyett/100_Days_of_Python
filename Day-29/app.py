@@ -48,18 +48,24 @@ def submit():
         messagebox.showwarning(
             title="Empty field", message="Please fill the empty field")
     else:
+        try:
+            with open("passwords.json", "r") as file:
+                # Reading File
+                data = json.load(file)
 
-        with open("passwords.json", "r") as file:
-            # Reading File
-            data = json.load(file)
-            # Update data
-            data.update(new_data)
-        with open("passwords.json", "a") as file:
+        except FileNotFoundError:
+            with open("passwords.json", "w") as file:
+                json.dump(new_data, file, indent=4)
+                # Update data
+
+        else:
             # Saving data
-            json.dump(data, file, indent=4)
+            data.update(new_data)
+            with open("passwords.json", "w") as file:
+                json.dump(data, file, indent=4)
 
-        website_input.delete(0, END)
-        password_input.delete(0, END)
+    website_input.delete(0, END)
+    password_input.delete(0, END)
 
 
 # ---------------------------- UI SETUP ------------------------------- #
