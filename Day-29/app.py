@@ -35,6 +35,7 @@ def generate_password():
 
 
 def submit():
+    global new_data
     website = website_input.get()
     email = username_input.get()
     password = password_input.get()
@@ -48,24 +49,52 @@ def submit():
         messagebox.showwarning(
             title="Empty field", message="Please fill the empty field")
     else:
-        try:
-            with open("passwords.json", "r") as file:
-                # Reading File
-                data = json.load(file)
+        open_file()
 
-        except FileNotFoundError:
-            with open("passwords.json", "w") as file:
-                json.dump(new_data, file, indent=4)
-                # Update data
 
-        else:
-            # Saving data
-            data.update(new_data)
-            with open("passwords.json", "w") as file:
-                json.dump(data, file, indent=4)
+def open_file():
 
-    website_input.delete(0, END)
-    password_input.delete(0, END)
+    try:
+        with open("passwords.json", "r") as file:
+            # Reading File
+            data = json.load(file)
+
+    except FileNotFoundError:
+        with open("passwords.json", "w") as file:
+            json.dump(new_data, file, indent=4)
+            # Update data
+
+    else:
+        # Saving data
+        data.update(new_data)
+        with open("passwords.json", "w") as file:
+            json.dump(data, file, indent=4)
+    finally:
+        website_input.delete(0, END)
+        password_input.delete(0, END)
+        # ---------------------------- FIND PASSWORD ------------------------------- #
+
+
+def find_password():
+    try:
+        with open("passwords.json", "r") as file:
+            # Reading File
+            data = json.load(file)
+            website = website_input.get()
+
+            if website in data:
+                item = data[website]
+
+                messagebox.showinfo(
+                    title=website, message=f"Email: {item['email']}\nPassword: {item['password']} ")
+
+            else:
+
+                messagebox.showwarning(
+                    title="Error", message="password not found")
+
+    except FileNotFoundError:
+        open_file()
 
 
 # ---------------------------- UI SETUP ------------------------------- #
@@ -82,6 +111,10 @@ website_label = Label(text="Website:").grid(column=0, row=1)
 website_input = Entry(width=35)
 website_input.focus()
 website_input.grid(column=1, row=1, columnspan=2)
+# Search Buttons
+search_btn = Button(text="Search", width=15, command=find_password)
+search_btn.grid(column=3, row=1)
+
 
 # username Label
 username_label = Label(text="Email/Username:").grid(column=0, row=2)
