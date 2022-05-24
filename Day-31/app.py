@@ -3,20 +3,34 @@ import pandas as pd
 import random
 current_card = {}
 BACKGROUND_COLOR = "#B1DDC6"
+current_card_index = 0
 # ---------------------------- CARD FUNCTIONALITY ------------------------------- #
-
-data = pd.read_csv('./data/french_words.csv')
-to_learn = data.to_dict(orient='records')
+try:
+    data = pd.read_csv('./data/word_to_learn.csv')
+except FileNotFoundError:
+    original_data = pd.read_csv('./data/french_words.csv')
+    to_learn = original_data.to_dict(orient='records')
+else:
+    to_learn = data.to_dict(orient='records')
 
 
 def next_card():
-    global current_card, flip_timer
+    global current_card, flip_timer, current_card_index
     window.after_cancel(flip_timer)
     current_card = random.choice(to_learn)
     canvas.itemconfig(card_title, text='French', fill='black')
     canvas.itemconfig(card_word, text=current_card['French'], fill='black')
     canvas.itemconfig(card_img, image=fr_img)
+
     flip_timer = window.after(3000, flip)
+
+
+def known_word():
+
+    to_learn.remove(current_card)
+    data = pd.DataFrame(to_learn)
+    data.to_csv("./data/word_to_learn.csv", index=False)
+    next_card()
 
 
 def flip():
@@ -51,8 +65,8 @@ unknown_btn.grid(row=1, column=0)
 
 # Valid Button image
 valid_btn_img = PhotoImage(file='./images/right.png')
-unknown_btn = Button(image=valid_btn_img, command=next_card)
-unknown_btn.grid(row=1, column=1)
+valid_btn = Button(image=valid_btn_img, command=known_word)
+valid_btn.grid(row=1, column=1)
 
 next_card()
 
