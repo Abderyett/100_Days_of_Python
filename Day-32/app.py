@@ -13,14 +13,12 @@ month = now.month
 day_of_week = now.weekday()
 
 
-with open("./quotes.txt") as file:
-    filecontents = file.readlines()
-    filecontents = [line.strip() for line in filecontents]
-    day_quote = random.choice(filecontents)
-
-
 print(day_quote)
 if day_of_week == now.weekday():
+    with open("./quotes.txt") as file:
+        filecontents = file.readlines()
+        filecontents = [line.strip() for line in filecontents]
+        day_quote = random.choice(filecontents)
     with smtplib.SMTP('smtp-mail.outlook.com') as connection:
         connection.starttls()
 
