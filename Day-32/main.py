@@ -2,36 +2,43 @@
 import random
 import datetime as dt
 import pandas as pd
+import smtplib as smtplib
 # 1. Update the birthdays.csv
 
 # 2. Check if today matches a birthday in the birthdays.csv
-name = ''
-rand_num = None
-# Read birthdays.csv with pandas
-data = pd.read_csv('./birthdays.csv')
 
-dic = data.to_dict(orient="records")
-
+my_email = 'abderyetttesting@hotmail.com'
+password = '123456789@()'
 
 today = dt.date.today()
 day = today.day
 month = today.month
-rand_num = random.randint(1, 3)
+today_tuple = (month, day)
 
+# Read birthdays.csv with pandas
+data = pd.read_csv('./birthdays.csv')
 
-for i in range(0, len(dic)):
-    if dic[i]['day'] == day and dic[i]['month'] == month:
-        name = dic[i]['name']
+birthdday_dic = {(data_row['month'], data_row['day'])
+                  : data_row for (index, data_row) in data.iterrows()}
 
+if today_tuple in birthdday_dic:
+    birthday_person = birthdday_dic[today_tuple]
 
-# 3. If step 2 is true, pick a random letter from letter templates and replace the [NAME] with the person's actual name from birthdays.csv
-with open(f'./letter_templates/letter_{rand_num}.txt', 'r') as letter:
-    text = letter.readlines()
+    file_path = f"./letter_templates/letter_{random.randint(1,3)}.txt"
 
-    text = text[0].replace('[NAME]', name)
-    print(text)
+    with open(file_path) as letter:
+        contents = letter.read()
+        contents.replace('[NAME]', birthday_person["name"])
+        print(contents)
+    with smtplib.SMTP('smtp-mail.outlook.com') as connection:
+        connection.starttls()
 
-with open(f'./letter_templates/letter_{rand_num}.txt', 'a') as letter:
-    letter.write(text)
+        connection.login(user=my_email, password=password)
+        connection.sendmail(from_addr=my_email,
+                            to_addrs=birthday_person['email'], msg=f"Subject: Happy birthday!\n\n{contents}")
+
+# with open(f'./letter_templates/letter_{rand_num}.txt', 'w') as letter:
+#     letter.write(text)
+#     print(text)
 
 # 4. Send the letter generated in step 3 to that person's email address.
