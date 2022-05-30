@@ -18,8 +18,7 @@ today_tuple = (month, day)
 # Read birthdays.csv with pandas
 data = pd.read_csv('./birthdays.csv')
 
-birthdday_dic = {(data_row['month'], data_row['day'])
-                  : data_row for (index, data_row) in data.iterrows()}
+birthdday_dic = {(data_row['month'], data_row['day'])                 : data_row for (index, data_row) in data.iterrows()}
 
 if today_tuple in birthdday_dic:
     birthday_person = birthdday_dic[today_tuple]
@@ -28,7 +27,7 @@ if today_tuple in birthdday_dic:
 
     with open(file_path) as letter:
         contents = letter.read()
-        contents.replace('[NAME]', birthday_person["name"])
+        contents = contents.replace('[NAME]', birthday_person["name"])
         print(contents)
     with smtplib.SMTP('smtp-mail.outlook.com') as connection:
         connection.starttls()
