@@ -1,5 +1,4 @@
 import html
-from ui import QuizInterface
 
 
 class QuizBrain:
@@ -22,14 +21,10 @@ class QuizBrain:
         #     f"Q.{self.question_number}: {q_text} (True/False): ")
         # self.check_answer(user_answer)
 
-    def check_answer(self, user_answer: str, quiz_ui: QuizInterface):
+    def check_answer(self, user_answer: str):
         correct_answer = self.current_question.answer
         if user_answer.lower() == correct_answer.lower():
             self.score += 1
-            print("You got it right!")
-            quiz_ui.canvas.configure(bg='green')
+            return True
         else:
-            print("That's wrong.")
-
-        print(f"Your current score is: {self.score}/{self.question_number}")
-        print("\n")
+            return False
