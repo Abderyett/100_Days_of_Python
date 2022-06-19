@@ -1,4 +1,25 @@
 import requests
+import os
+from twilio.rest import Client
+from dotenv import load_dotenv
+
+
+load_dotenv()
+account_sid = os.getenv('TWILIO_ACCOUNT_SID')
+auth_token = os.getenv('TWILIO_AUTH_TOKEN')
+
+
+client = Client(account_sid, auth_token)
+
+message = client.messages \
+    .create(
+        body='This is the ship that made the Kessel Run in fourteen parsecs?',
+        from_='+15017122661',
+        to='+15558675310'
+    )
+
+print(message.sid)
+
 api_key = "619d37bdffe48dd4c39b272f2befe14b"
 location = "London"
 parameters = {
@@ -19,7 +40,8 @@ sliced_list = weather_data["hourly"][0:13]
 
 will_rain = False
 for hour_data in sliced_list:
-    if hour_data["weather"][0]["id"] < 800:
+    condition_code = hour_data["weather"][0]["id"]
+    if int(condition_code) < 800:
         will_rain = True
 
 if will_rain:
