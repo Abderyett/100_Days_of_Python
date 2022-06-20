@@ -2,30 +2,23 @@ import requests
 import os
 from twilio.rest import Client
 from dotenv import load_dotenv
+import datetime as dt
 
 
 load_dotenv()
 account_sid = os.getenv('TWILIO_ACCOUNT_SID')
 auth_token = os.getenv('TWILIO_AUTH_TOKEN')
+now = dt.datetime.now()
+current_time = now.strftime("%H:%M:%S")
 
-
-client = Client(account_sid, auth_token)
-
-message = client.messages \
-    .create(
-        body='This is the ship that made the Kessel Run in fourteen parsecs?',
-        from_='+15017122661',
-        to='+15558675310'
-    )
-
-print(message.sid)
 
 api_key = "619d37bdffe48dd4c39b272f2befe14b"
 location = "London"
 parameters = {
-    "lat": "36.5322102",
-    "lon": "2.9918496",
-    "exclude": "current,minutely,daily,alerts",
+    "lat": "36.7753606",
+    "lon": "3.0601882",
+    "units": "metric",
+
     "lang": "fr",
     "appid": api_key,
 }
@@ -35,14 +28,24 @@ response = requests.get(
 response.raise_for_status()
 weather_data = response.json()
 # print(weather_data)
-# print(weather_data["hourly"][0]["weather"][0])
-sliced_list = weather_data["hourly"][0:13]
+temp_max = round(weather_data["daily"][0]["temp"]["max"])
+temp_min = round(weather_data["daily"][0]["temp"]["min"])
 
-will_rain = False
-for hour_data in sliced_list:
-    condition_code = hour_data["weather"][0]["id"]
-    if int(condition_code) < 800:
-        will_rain = True
 
-if will_rain:
-    print("Bring umbrella")
+# sliced_list = weather_data["hourly"][0:19]
+
+# will_rain = False
+# for hour_data in sliced_list:
+#     condition_code = hour_data["weather"][0]["id"]
+#     if int(condition_code) < 800:
+#         will_rain = True
+#         print()
+while True:
+    if current_time == "07:45:00":
+        client = Client(account_sid, auth_token)
+        message = client.messages \
+            .create(
+                body=f"Good morning! Weather info: Temperature for today in Algiers is {temp_min}°C - {temp_max}°C.",
+                from_='++19784806789',
+                to='+213770241855'
+            )
