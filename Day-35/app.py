@@ -3,13 +3,15 @@ import os
 from twilio.rest import Client
 from dotenv import load_dotenv
 import datetime as dt
+import time
 
 
 load_dotenv()
 account_sid = os.getenv('TWILIO_ACCOUNT_SID')
 auth_token = os.getenv('TWILIO_AUTH_TOKEN')
 now = dt.datetime.now()
-current_time = now.strftime("%H:%M:%S")
+current_hour = now.hour
+current_min = now.minute
 
 
 api_key = "619d37bdffe48dd4c39b272f2befe14b"
@@ -40,8 +42,15 @@ temp_min = round(weather_data["daily"][0]["temp"]["min"])
 #     if int(condition_code) < 800:
 #         will_rain = True
 #         print()
-while True:
-    if current_time == "07:45:00":
+is_time_match = True
+while is_time_match:
+    time.sleep(1)
+    now = dt.datetime.now()
+    current_hour = now.hour
+    current_min = now.minute
+
+    if current_hour == 7 and current_min == 42:
+        print('it match')
         client = Client(account_sid, auth_token)
         message = client.messages \
             .create(
@@ -49,3 +58,4 @@ while True:
                 from_='++19784806789',
                 to='+213770241855'
             )
+        is_time_match = False
