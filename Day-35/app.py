@@ -4,6 +4,7 @@ from twilio.rest import Client
 from dotenv import load_dotenv
 import datetime as dt
 import time
+from twilio.http.http_client import TwilioHttpClient
 
 
 load_dotenv()
@@ -50,8 +51,11 @@ while is_time_match:
     current_min = now.minute
 
     if current_hour == 7 and current_min == 42:
-        print('it match')
-        client = Client(account_sid, auth_token)
+        proxy_client = TwilioHttpClient(
+            proxy={'http': os.environ['http_proxy'], 'https': os.environ['https_proxy']})
+
+        client = Client(account_sid, auth_token, http_client=proxy_client)
+
         message = client.messages \
             .create(
                 body=f"Good morning! Weather info: Temperature for today in Algiers is {temp_min}°C - {temp_max}°C.",
