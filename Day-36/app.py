@@ -2,16 +2,19 @@ import requests
 from dotenv import load_dotenv
 import datetime as dt
 from datetime import timedelta
+import os
 STOCK = "TSLA"
 COMPANY_NAME = "Tesla Inc"
 
 load_dotenv()
+alpha_vintage_api = os.getenv("API_KEY_ALPHAVANTAGE")
+news_api = os.getenv("NEW_API_KEY")
 # STEP 1: Use https://www.alphavantage.co
 # When STOCK price increase/decreases by 5% between yesterday and the day before yesterday then print("Get News").
 parameters = {
     "function": "TIME_SERIES_DAILY",
     "symbol": STOCK,
-    "apikey": "PQ06SXLP4TRX3RWS"
+    "apikey": alpha_vintage_api
 
 }
 response = requests.get(
@@ -19,27 +22,49 @@ response = requests.get(
 
 response.raise_for_status()
 
-data = response.json()
+
+data = response.json()["Time Series (Daily)"]
 
 
-now = dt.datetime.today()
-before_yesterday = str(now-timedelta(days=3))[0:10]
-yesterday = str(now-timedelta(days=2))[0:10]
+now = dt.datetime.now().date()
+
+# before_yesterday = str(now-timedelta(days=3))[0:10]
+# yesterday = str(now-timedelta(days=2))[0:10]
+
+data_list = [value for (key, value) in data.items()]
+yesterday_data = data_list[0]
+yesterday_closing_price = yesterday_data['4. close']
+
+# * Get the day before yesterday closing price
+day_before_yesterday_data = data_list[1]
+day_before_yesterday_closing_price = yesterday_data['4. close']
 
 
-yesterday_close_price = float(
-    data["Time Series (Daily)"][before_yesterday]['4. close'])
-today_opening_price = float(data["Time Series (Daily)"][yesterday]['4. close'])
+difference = abs(float(yesterday_closing_price) -
+                 float(day_before_yesterday_closing_price))
 
-difference = abs(yesterday_close_price-today_opening_price)
-
-diff_percent = (difference/float(yesterday_close_price))*100
+diff_percent = (difference/float(yesterday_closing_price))*100
 
 if diff_percent >= 5:
     print("Get News")
 
 # STEP 2: Use https://newsapi.org
 # Instead of printing ("Get News"), actually get the first 3 news pieces for the COMPANY_NAME.
+
+news_params = {
+    "q": COMPANY_NAME,
+    "from": now,
+    "sortBy": "popularity",
+    "apiKey": news_api
+}
+res = requests.get(
+    "https://newsapi.org/v2/everything?", params=news_params)
+res.raise_for_status()
+
+news_data = res.json()
+print(now)
+print(news_data)
+
 
 # STEP 3: Use https://www.twilio.com
 # Send a seperate message with the percentage change and each article's title and description to your phone number.
