@@ -53,6 +53,7 @@ if diff_percent >= 5:
 
 news_params = {
     "q": COMPANY_NAME,
+
     "from": now,
     "sortBy": "popularity",
     "apiKey": news_api
@@ -62,9 +63,15 @@ res = requests.get(
 res.raise_for_status()
 
 news_data = res.json()
-print(now)
-print(news_data)
 
+top_news = news_data["articles"][0:3]
+
+
+news = [
+    f"Headlines :{article['title']}.\nBrief {article['description']}" for article in top_news]
+
+
+print(news)
 
 # STEP 3: Use https://www.twilio.com
 # Send a seperate message with the percentage change and each article's title and description to your phone number.
