@@ -37,7 +37,7 @@ graph_endpoint = f"{pixela_endpoint}/{username}/graphs"
 # print(response.text)
 
 
-# post pixel
+# ? post pixel
 today = dt.datetime.now()
 create_pixel_params = {
     "date": today.strftime("%Y%m%d"),
@@ -46,9 +46,24 @@ create_pixel_params = {
 }
 
 
-post_pixel_endpoint = f"{pixela_endpoint}/{username}/graphs/{GRAPH_NAME}"
-print(post_pixel_endpoint)
-response = requests.post(
-    url=post_pixel_endpoint, json=create_pixel_params, headers=headers)
+pixel_endpoint = f"{pixela_endpoint}/{username}/graphs/{GRAPH_NAME}"
+print(pixel_endpoint)
+# response = requests.post(
+#     url=pixel_endpoint, json=create_pixel_params, headers=headers)
+
+# print(response.text)
+
+# ?Update Data on graph
+update_params = {"quantity": "43"}
+update_endpoint = f"{pixel_endpoint}/20220716"
+
+# response = requests.put(
+#     url=update_endpoint, json=update_params, headers=headers)
+
+# print(response.text)
+
+# ? Delete pixel commit
+
+response = requests.delete(url=update_endpoint, headers=headers)
 
 print(response.text)
