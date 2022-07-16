@@ -1,11 +1,13 @@
 import requests
 import os
 from dotenv import load_dotenv
+import datetime as dt
 
 load_dotenv()
 pixela_token = os.getenv("PIXELA_TOKEN")
 username = os.getenv("USERNAME")
 token = os.getenv("TOKEN")
+GRAPH_NAME = "graph2"
 
 pixela_endpoint = "https://pixe.la/v1/users"
 parameters = {
@@ -36,12 +38,15 @@ graph_endpoint = f"{pixela_endpoint}/{username}/graphs"
 
 
 # post pixel
+today = dt.datetime.now()
 create_pixel_params = {
-    "date": "20220716",
+    "date": today.strftime("%Y%m%d"),
     "quantity": "22"
 
 }
-post_pixel_endpoint = f"{pixela_endpoint}/{username}/graphs/graph2"
+
+
+post_pixel_endpoint = f"{pixela_endpoint}/{username}/graphs/{GRAPH_NAME}"
 print(post_pixel_endpoint)
 response = requests.post(
     url=post_pixel_endpoint, json=create_pixel_params, headers=headers)
